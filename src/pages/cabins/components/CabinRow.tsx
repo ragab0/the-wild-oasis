@@ -1,33 +1,45 @@
-import type { Cabin } from "@/types/cabine";
+import type { Cabin } from "@/types/cabin";
 import { Button } from "@/components/ui/button";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { formatCurrency } from "@/utils/helpers";
 import { useState } from "react";
 import { Copy, Pencil, Trash } from "lucide-react";
 import CabinForm from "./CabinForm";
+import { useDeleteCabin, useDuplicateCabin } from "@/hooks/useCabins";
+import { Spinner } from "@/components/ui/shadcn-io/spinner";
 
 export default function CabinRow({ cabin }: { cabin: Cabin }) {
+  const { mutate: deleteCabin, isPending: isDeleting } = useDeleteCabin();
+  const { mutate: duplicateCabin, isPending: isDupliating } =
+    useDuplicateCabin();
   const [showForm, setShowForm] = useState(false);
-  const isCreating = false;
-  const isDeleting = false;
-  const {
-    // id,
-    name,
-    // description,
-    capacity,
-    discount,
-    price,
-    image,
-    // created_at,
-    // updated_at,
-  } = cabin;
+  const { name, capacity, discount, price, image } = cabin;
 
-  function duplicateHandler() {}
-  function deleteHandler() {}
+  function duplicateHandler() {
+    duplicateCabin(cabin);
+  }
+
+  function deleteHandler() {
+    deleteCabin(cabin.id);
+  }
+
+  if (isDeleting) {
+    return (
+      <TableRow className="animate-pulse px-1 py-2">
+        <TableCell colSpan={6} className="h-20 bg-gray-200"></TableCell>
+      </TableRow>
+    );
+  }
+
+  const isLoading = isDeleting || isDupliating;
 
   return (
     <>
-      <TableRow>
+      <TableRow
+        className={
+          isLoading ? "animate-pulse pointer-events-none opacity-70" : ""
+        }
+      >
         <TableCell className="font-medium p-1">
           {image && (
             <img
@@ -52,10 +64,10 @@ export default function CabinRow({ cabin }: { cabin: Cabin }) {
           <div>
             <Button
               variant="ghost"
-              disabled={isCreating}
+              disabled={isDupliating}
               onClick={duplicateHandler}
             >
-              <Copy />
+              {isDupliating ? <Spinner /> : <Copy />}
             </Button>
             <Button
               variant="ghost"
@@ -76,7 +88,10 @@ export default function CabinRow({ cabin }: { cabin: Cabin }) {
       {showForm && (
         <TableRow className="flex-1 w-full">
           <TableCell width={"100%"} colSpan={6}>
-            <CabinForm cabinToEdit={cabin} />
+            <CabinForm
+              cabinToEdit={cabin}
+              hideEditForm={() => setShowForm(false)}
+            />
           </TableCell>
         </TableRow>
       )}

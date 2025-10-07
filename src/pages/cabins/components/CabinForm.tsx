@@ -1,17 +1,26 @@
-import type { Cabin } from "@/types/cabine";
+import type {
+  Cabin,
+  CreateCabinFormData,
+  UpdateCabinData,
+} from "@/types/cabin";
+import OurFormField from "@/components/OurFormField";
 import { Form } from "@/components/ui/form";
 import { useForm, type Control, type FieldError } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createCabinSchema } from "@/validations/cabin.validation";
 import { useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import OurFormField from "@/components/OurFormField";
+import { useCreateCabin, useUpdateCabin } from "@/hooks/useCabins";
+import { Spinner } from "@/components/ui/shadcn-io/spinner";
 
 interface props {
   cabinToEdit?: Cabin | undefined;
+  hideEditForm?: () => void;
 }
 
-export default function CabinForm({ cabinToEdit }: props) {
+export default function CabinForm({ cabinToEdit, hideEditForm }: props) {
+  const { mutate: create, isPending: isPendingC } = useCreateCabin();
+  const { mutate: update, isPending: isPendingU } = useUpdateCabin();
   const form = useForm({
     resolver: zodResolver(createCabinSchema),
     mode: "onChange",
@@ -34,7 +43,6 @@ export default function CabinForm({ cabinToEdit }: props) {
     trigger,
     reset,
   } = form;
-
   const price = watch("price");
   const discount = watch("discount");
 
@@ -42,16 +50,40 @@ export default function CabinForm({ cabinToEdit }: props) {
     trigger(["price", "discount"]);
   }, [price, discount, trigger]);
 
-  function submitHandler(data: unknown) {
-    console.log("submited data is:", data);
+  function resetHandler() {
+    reset();
+    const img = document.getElementById("image") as HTMLInputElement | null;
+    if (img) img.value = "";
+  }
+
+  function submitHandler(data: CreateCabinFormData | UpdateCabinData) {
+    if (cabinToEdit) {
+      update(
+        {
+          id: cabinToEdit.id,
+          data: data,
+          hasImagePath: cabinToEdit.image,
+        },
+        { onSuccess: () => hideEditForm?.() }
+      );
+    } else {
+      create(data, { onSuccess: () => resetHandler() });
+    }
   }
 
   const image = watch("image");
   console.log("image is:", image);
 
+  const isLoading = isPendingC || isPendingU;
+
   return (
     <Form {...form}>
-      <form onSubmit={handleSubmit(submitHandler)} className="space-y-8">
+      <form
+        onSubmit={handleSubmit(submitHandler)}
+        className={`space-y-8 ${
+          isLoading ? "pointer-events-none opacity-60" : ""
+        }`}
+      >
         <OurFormField
           control={control as Control<Partial<Cabin>>}
           type="text"
@@ -115,18 +147,13 @@ export default function CabinForm({ cabinToEdit }: props) {
             className="capitalize"
             disabled={!isDirty || !isValid}
           >
+            {isLoading && <Spinner />}
             {cabinToEdit ? "save changes" : "add new cabine"}
           </Button>
           <Button
             type="button"
             size={"lg"}
-            onClick={() => {
-              reset();
-              const img = document.getElementById(
-                "image"
-              ) as HTMLInputElement | null;
-              if (img) img.value = "";
-            }}
+            onClick={resetHandler}
             variant={"outline"}
           >
             Cancel

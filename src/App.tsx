@@ -8,23 +8,38 @@ import SettingsPage from "./pages/settings/SettingsPage";
 import UsersPage from "./pages/users/UsersPage";
 import CabinsPage from "./pages/cabins/CabinsPage";
 import BookingsPage from "./pages/bookings/BookingsPage";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "sonner";
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: Infinity,
+    },
+  },
+});
 
 export default function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<AppLayout />}>
-          <Route index element={<Navigate to="/dashboard" />} />
-          <Route path="dashboard" element={<HomePage />} />
-          <Route path="bookings" element={<BookingsPage />} />
-          <Route path="cabins" element={<CabinsPage />} />
-          <Route path="users" element={<UsersPage />} />
-          <Route path="settings" element={<SettingsPage />} />
-          <Route path="account" element={<AccountPage />} />
-        </Route>
-        <Route path="login" element={<LoginPage />} />
-        <Route path="*" element={<NotFoundPage />} />
-      </Routes>
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Routes>
+          <Route element={<AppLayout />}>
+            <Route index element={<Navigate to="/dashboard" />} />
+            <Route path="dashboard" element={<HomePage />} />
+            <Route path="bookings" element={<BookingsPage />} />
+            <Route path="cabins" element={<CabinsPage />} />
+            <Route path="users" element={<UsersPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+            <Route path="account" element={<AccountPage />} />
+          </Route>
+          <Route path="login" element={<LoginPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
+      </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
+      <Toaster />
+    </QueryClientProvider>
   );
 }

@@ -1,4 +1,4 @@
-import type { Cabin } from "@/types/cabine";
+import type { Cabin } from "@/types/cabin";
 
 export const cabinsMockData: Cabin[] = [
   {

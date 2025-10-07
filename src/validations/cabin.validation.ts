@@ -59,6 +59,3 @@ export const createCabinSchema = z
   });
 
 export const updateCabinSchema = createCabinSchema.partial();
-
-export type CreateCabinFormData = z.infer<typeof createCabinSchema>;
-export type UpdateCabinData = z.infer<typeof updateCabinSchema>;
