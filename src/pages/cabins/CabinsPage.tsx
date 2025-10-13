@@ -1,15 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
 import CabinTable from "./components/CabinTable";
 import CabinForm from "./components/CabinForm";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 
 export default function CabinsPage() {
-  const [showForm, setShowForm] = useState(false);
-
-  function handleAdd() {
-    setShowForm((show) => !show);
-  }
-
   return (
     <>
       <div className="flex justify-between items-center gap-5">
@@ -18,10 +12,16 @@ export default function CabinsPage() {
       </div>
       <div className="flex flex-col gap-5">
         <CabinTable />
-        <Button onClick={handleAdd} size={"lg"}>
-          {showForm ? "Hide" : "Add new cabin"}
-        </Button>
-        {showForm && <CabinForm />}
+        <Dialog>
+          <DialogTrigger asChild>
+            <Button size={"lg"} className="w-full">
+              Add new cabin
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="!max-w-7xl">
+            <CabinForm />
+          </DialogContent>
+        </Dialog>
       </div>
     </>
   );

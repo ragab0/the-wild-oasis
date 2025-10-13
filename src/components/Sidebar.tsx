@@ -52,8 +52,8 @@ export default function AppSidebar() {
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <NavLink to={item.url} className="nav-link">
-                    <item.icon size={25} />
-                    <span className="text-lg font-medium">{item.title}</span>
+                    <item.icon size={20} />
+                    <span className="font-medium">{item.title}</span>
                   </NavLink>
                 </SidebarMenuItem>
               ))}

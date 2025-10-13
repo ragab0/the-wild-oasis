@@ -51,19 +51,17 @@ export function useCreateCabin() {
   });
 }
 
+interface Update {
+  data: UpdateCabinData;
+  id: number;
+  hasImagePath: string | null;
+}
 export function useUpdateCabin() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      data,
-      id,
-      hasImagePath,
-    }: {
-      data: UpdateCabinData;
-      id: number;
-      hasImagePath: string | null;
-    }) => cabinsService.updateCabin(data, id, hasImagePath),
+    mutationFn: ({ data, id, hasImagePath }: Update) =>
+      cabinsService.updateCabin(data, id, hasImagePath),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: cabinsKeys.all });
       toast.success("Cabin successfully updated");

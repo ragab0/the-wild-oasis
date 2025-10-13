@@ -156,7 +156,7 @@ export default function CabinForm({ cabinToEdit, hideEditForm }: props) {
             onClick={resetHandler}
             variant={"outline"}
           >
-            Cancel
+            Reset
           </Button>
         </div>
       </form>
