@@ -5,14 +5,14 @@ import type {
 
 export interface Cabin {
   id: number;
-  name: string;
-  capacity: number;
   created_at: string;
   updated_at: string;
-  description: string;
-  discount: number;
-  image: string | null;
+  name: string;
+  capacity: number;
   price: number;
+  discount: number;
+  description: string;
+  image: string | null;
 }
 
 export type CreateCabinFormData = z.infer<typeof createCabinSchema>;

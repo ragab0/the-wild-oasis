@@ -1,6 +1,7 @@
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarHeader,
@@ -10,6 +11,7 @@ import {
 import { Calendar, Home, Inbox, Settings } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
+import UploadSample from "./UploadSample";
 
 const items = [
   {
@@ -45,7 +47,7 @@ export default function AppSidebar() {
       <SidebarHeader>
         <Logo />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="justify-between">
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
@@ -60,6 +62,9 @@ export default function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        <SidebarFooter>
+          <UploadSample />
+        </SidebarFooter>
       </SidebarContent>
     </Sidebar>
   );
