@@ -1,6 +1,8 @@
 import type React from "react";
 import { Input } from "./ui/input";
 import { type Control, type FieldError } from "react-hook-form";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
 import {
   FormControl,
   FormField,
@@ -9,6 +11,11 @@ import {
   FormMessage,
 } from "./ui/form";
 import { Textarea } from "./ui/textarea";
+import {
+  InputGroup,
+  InputGroupButton,
+  InputGroupInput,
+} from "./ui/input-group";
 
 interface props {
   control: Control;
@@ -17,6 +24,7 @@ interface props {
   label: string;
   autoCapitalize?: React.HTMLAttributes<HTMLInputElement>["autoCapitalize"];
   error?: FieldError;
+  itemStyle?: React.HTMLAttributes<HTMLDivElement>["className"];
 }
 
 export default function OurFormField({
@@ -26,14 +34,21 @@ export default function OurFormField({
   label,
   autoCapitalize = "none",
   error,
+  itemStyle,
 }: props) {
+  const [isPass, setIsPass] = useState(type === "password");
+  function togglePass() {
+    setIsPass((prev) => !prev);
+  }
   return (
     <FormField
       control={control}
       name={name}
       render={({ field }) => (
-        <FormItem className="grid-cols-3 border-b py-3 mb-0">
-          <FormLabel className="capitalize">{label}</FormLabel>
+        <FormItem className={itemStyle || "grid-cols-3 border-b py-3 mb-0"}>
+          <FormLabel htmlFor={field.name} className="capitalize">
+            {label}
+          </FormLabel>
           <FormControl>
             {type === "textarea" ? (
               <Textarea
@@ -52,6 +67,18 @@ export default function OurFormField({
                   field.onChange(event.target.files?.[0] || null)
                 }
               />
+            ) : type === "password" ? (
+              <InputGroup>
+                <InputGroupInput
+                  id={field.name}
+                  type={isPass ? "password" : "text"}
+                  aria-invalid={!!error}
+                  {...field}
+                />
+                <InputGroupButton onClick={togglePass} className="m-1">
+                  {isPass ? <Eye /> : <EyeOff />}
+                </InputGroupButton>
+              </InputGroup>
             ) : (
               <Input
                 id={field.name}
