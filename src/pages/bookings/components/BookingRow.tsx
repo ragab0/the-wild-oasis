@@ -49,7 +49,7 @@ export default function BookingRow({ booking }: { booking: Booking }) {
   if (isDeleting) {
     return (
       <TableRow className="animate-pulse px-1 py-2">
-        <TableCell colSpan={6} className="h-20 bg-gray-200"></TableCell>
+        <TableCell colSpan={6} className="h-20"></TableCell>
       </TableRow>
     );
   }
@@ -63,26 +63,22 @@ export default function BookingRow({ booking }: { booking: Booking }) {
           isLoading ? "animate-pulse pointer-events-none opacity-70" : ""
         }
       >
-        <TableCell className="sono font-semibold capitalize text-gray-600">
-          {name}
-        </TableCell>
+        <TableCell className="sono font-semibold capitalize">{name}</TableCell>
         <TableCell>
           <div className="flex flex-col gap-1">
-            <span className="font-semibold text-gray-600 capitalize">
-              {full_name}
-            </span>
-            <span className="text-xs text-gray-500">{email}</span>
+            <span className="font-semibold capitalize">{full_name}</span>
+            <span className="text-xs text-muted-foreground">{email}</span>
           </div>
         </TableCell>
         <TableCell>
           <div className="flex flex-col gap-1">
-            <span className="font-semibold text-gray-600">
+            <span className="font-semibold">
               {isToday(new Date(start_date))
                 ? "Today"
                 : formatDistanceFromNow(start_date)}{" "}
               &rarr; {total_nights} night stay
             </span>
-            <span className="text-xs text-gray-500">
+            <span className="text-xs text-muted-foreground">
               {format(new Date(start_date), "MMM dd yyyy")} &mdash;{" "}
               {format(new Date(end_date), "MMM dd yyyy")}
             </span>
@@ -95,7 +91,7 @@ export default function BookingRow({ booking }: { booking: Booking }) {
             {status.replace("-", " ")}
           </span>
         </TableCell>
-        <TableCell className="font-semibold sono text-gray-600">
+        <TableCell className="font-semibold sono">
           {formatCurrency(total_price)}
         </TableCell>
         <TableCell>

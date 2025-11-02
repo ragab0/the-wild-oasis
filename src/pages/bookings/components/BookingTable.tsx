@@ -16,9 +16,9 @@ export default function BookingTable() {
   if (!data || !data.length) return "no data";
 
   return (
-    <Table className="border border-gray-200 rounded-xl">
+    <Table className="border rounded-xl">
       <TableHeader className="text-center">
-        <TableRow className="uppercase [&>*]:font-semibold [&>*]:text-gray-600">
+        <TableRow className="uppercase [&>*]:font-semibold bg-sidebar">
           <TableHead>Cabin</TableHead>
           <TableHead>Guest</TableHead>
           <TableHead>Dates</TableHead>

@@ -127,49 +127,37 @@
 .dark {
   /* ===== DARK MODE (SHADCN) ===== */
 
-  /* Base colors */
-  --background: oklch(0.24 0.008 264.05); /* grey-900 */
-  --foreground: oklch(0.986 0.001 264.05); /* grey-50 */
-  /* Card */
-  --card: oklch(0.297 0.011 256.85); /* grey-800 */
-  --card-foreground: oklch(0.986 0.001 264.05);
-  /* Popover */
-  --popover: oklch(0.297 0.011 256.85);
-  --popover-foreground: oklch(0.986 0.001 264.05);
-  /* Primary (Brand) */
-  --primary: oklch(0.684 0.166 285.94); /* brand-500 - brighter for dark */
-  --primary-foreground: oklch(0.24 0.008 264.05);
-  /* Secondary */
-  --secondary: oklch(0.385 0.013 256.85); /* grey-700 */
-  --secondary-foreground: oklch(0.986 0.001 264.05);
-  /* Muted */
-  --muted: oklch(0.385 0.013 256.85); /* grey-700 */
-  --muted-foreground: oklch(0.708 0.008 264.05); /* grey-400 */
-  /* Accent */
-  --accent: oklch(0.385 0.013 256.85); /* grey-700 */
-  --accent-foreground: oklch(0.986 0.001 264.05);
-  /* Destructive */
-  --destructive: oklch(0.704 0.191 22.216); /* red-700 lighter */
-  --destructive-foreground: oklch(0.986 0.001 264.05);
-  /* Border & Input */
-  --border: oklch(0.385 0.013 256.85); /* grey-700 */
-  --input: oklch(0.385 0.013 256.85);
-  --ring: oklch(0.684 0.166 285.94); /* brand-500 */
-  /* Charts - adjusted for dark */
-  --chart-1: oklch(0.684 0.166 285.94);
+  --background: oklch(0.21 0.03 264.68);
+  --foreground: oklch(0.984 0.003 247.858);
+  --card: oklch(0.25 0.03 259.07);
+  --card-foreground: oklch(0.984 0.003 247.858);
+  --popover: oklch(0.208 0.042 265.755);
+  --popover-foreground: oklch(0.984 0.003 247.858);
+  --primary: oklch(0.929 0.013 255.508);
+  --primary-foreground: oklch(0.208 0.042 265.755);
+  --secondary: oklch(0.279 0.041 260.031);
+  --secondary-foreground: oklch(0.984 0.003 247.858);
+  --muted: oklch(0.279 0.041 260.031);
+  --muted-foreground: oklch(0.704 0.04 256.788);
+  --accent: oklch(0.279 0.041 260.031);
+  --accent-foreground: oklch(0.984 0.003 247.858);
+  --destructive: oklch(0.704 0.191 22.216);
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.551 0.027 264.364);
+  --chart-1: oklch(0.488 0.243 264.376);
   --chart-2: oklch(0.696 0.17 162.48);
-  --chart-3: oklch(0.6 0.15 157.89);
-  --chart-4: oklch(0.828 0.189 84.429);
-  --chart-5: oklch(0.704 0.191 22.216);
-  /* Sidebar */
-  --sidebar: oklch(0.297 0.011 256.85);
-  --sidebar-foreground: oklch(0.97 0.002 264.05);
-  --sidebar-primary: oklch(0.684 0.166 285.94);
-  --sidebar-primary-foreground: oklch(0.986 0.001 264.05);
-  --sidebar-accent: oklch(0.385 0.013 256.85);
-  --sidebar-accent-foreground: oklch(0.97 0.002 264.05);
-  --sidebar-border: oklch(0.385 0.013 256.85);
-  --sidebar-ring: oklch(0.684 0.166 285.94);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.208 0.042 265.755);
+  --sidebar-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-accent: oklch(0.279 0.041 260.031);
+  --sidebar-accent-foreground: oklch(0.984 0.003 247.858);
+  --sidebar-border: oklch(1 0 0 / 10%);
+  --sidebar-ring: oklch(0.551 0.027 264.364);
 
   /* === Our Custom Semantic Colors === */
 
@@ -205,20 +193,19 @@
   body {
     @apply bg-background text-foreground;
     font-family: "Poppins", sans-serif;
-    color: var(--color-grey-700);
     transition: color 0.3s, background-color 0.3s;
   }
   img {
     filter: grayscale(var(--image-grayscale)) opacity(var(--image-opacity));
   }
   h1 {
-    @apply text-gray-700 font-semibold text-3xl;
+    @apply text-gray-700 dark:text-gray-200 font-semibold text-3xl;
   }
   h2 {
-    @apply text-gray-700 font-semibold text-2xl;
+    @apply text-gray-700 dark:text-gray-200 font-semibold text-2xl;
   }
   h3 {
-    @apply text-gray-700 font-semibold text-xl;
+    @apply text-gray-700 dark:text-gray-200 font-semibold text-xl;
   }
   button {
     cursor: pointer;
@@ -255,7 +242,7 @@
   .nav-link:active,
   .nav-link.active:link,
   .nav-link.active:visited {
-    @apply bg-gray-100 text-brand rounded-sm;
+    @apply bg-gray-100 dark:bg-gray-800 text-brand rounded-sm;
   }
   .nav-link:hover svg,
   .nav-link:active svg,

@@ -35,14 +35,14 @@ export default function SignupPage() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+    <div className="flex min-h-screen items-center justify-center bg-background px-4 py-12 sm:px-6 lg:px-8">
       <div className="w-full max-w-md space-y-10">
         <Logo />
         <h2 className="text-3xl text-center">Create your account</h2>
         <Form {...form}>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="space-y-6 rounded-lg bg-white px-6 py-8 shadow sm:px-10"
+            className="space-y-6 rounded-lg bg-card px-6 py-8 shadow sm:px-10"
           >
             <OurFormField
               control={control}
@@ -97,13 +97,16 @@ export default function SignupPage() {
             </Button>
 
             {/* Back to login link */}
-            <div className="mt-4 text-center">
-              <Link
-                to="/login"
-                className="text-sm font-medium text-gray-600 hover:text-gray-900 flex items-center justify-center gap-1"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Back to login
+            <div className="border-t border-border pt-6">
+              <Link to="/login">
+                <Button
+                  variant="outline"
+                  className="w-full font-medium py-2.5 rounded-xl group"
+                  size={"lg"}
+                >
+                  <ArrowLeft className="ml-2 h-4 w-4 transform group-hover:-translate-x-1 transition-transform" />
+                  Back to login
+                </Button>
               </Link>
             </div>
           </form>

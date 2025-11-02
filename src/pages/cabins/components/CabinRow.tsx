@@ -26,7 +26,7 @@ export default function CabinRow({ cabin }: { cabin: Cabin }) {
   if (isDeleting) {
     return (
       <TableRow className="animate-pulse px-1 py-2">
-        <TableCell colSpan={6} className="h-20 bg-gray-200"></TableCell>
+        <TableCell colSpan={6} className="h-20"></TableCell>
       </TableRow>
     );
   }
@@ -48,12 +48,8 @@ export default function CabinRow({ cabin }: { cabin: Cabin }) {
             />
           )}
         </TableCell>
-        <TableCell className="font-semibold sono capitalize text-gray-600">
-          {name}
-        </TableCell>
-        <TableCell className=" text-gray-600">
-          Fits up to {capacity} guests
-        </TableCell>
+        <TableCell className="font-semibold sono capitalize">{name}</TableCell>
+        <TableCell>Fits up to {capacity} guests</TableCell>
         <TableCell className=" font-semibold sono">
           {formatCurrency(price)}
         </TableCell>

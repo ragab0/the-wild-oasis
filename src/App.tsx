@@ -14,6 +14,7 @@ import BookingsPage from "./pages/bookings/BookingsPage";
 import SignupPage from "./pages/signup/SignupPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicedRoute from "./components/PublicedRoute";
+import { ThemeProvider } from "./providers/ThemeProvider";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -26,35 +27,37 @@ const queryClient = new QueryClient({
 export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <BrowserRouter>
-        <Routes>
-          {/* protected dashboard */}
-          <Route
-            element={
-              <ProtectedRoute>
-                <AppLayout />
-              </ProtectedRoute>
-            }
-          >
-            <Route index element={<Navigate to="/dashboard" />} />
-            <Route path="dashboard" element={<HomePage />} />
-            <Route path="bookings" element={<BookingsPage />} />
-            <Route path="cabins" element={<CabinsPage />} />
-            <Route path="users" element={<UsersPage />} />
-            <Route path="settings" element={<SettingsPage />} />
-            <Route path="account" element={<AccountPage />} />
-          </Route>
-          {/* public pages - for non-signed in users */}
-          <Route element={<PublicedRoute />}>
-            <Route path="login" element={<LoginPage />} />
-            <Route path="signup" element={<SignupPage />} />
-          </Route>
-          {/* not found */}
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </BrowserRouter>
+      <ThemeProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* 1. protected dashboard */}
+            <Route
+              element={
+                <ProtectedRoute>
+                  <AppLayout />
+                </ProtectedRoute>
+              }
+            >
+              <Route index element={<Navigate to="/dashboard" />} />
+              <Route path="dashboard" element={<HomePage />} />
+              <Route path="bookings" element={<BookingsPage />} />
+              <Route path="cabins" element={<CabinsPage />} />
+              <Route path="users" element={<UsersPage />} />
+              <Route path="settings" element={<SettingsPage />} />
+              <Route path="account" element={<AccountPage />} />
+            </Route>
+            {/* 2. public pages - for non-signed in users */}
+            <Route element={<PublicedRoute />}>
+              <Route path="login" element={<LoginPage />} />
+              <Route path="signup" element={<SignupPage />} />
+            </Route>
+            {/* 3. not found */}
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </BrowserRouter>
+        <Toaster />
+      </ThemeProvider>
       <ReactQueryDevtools initialIsOpen={false} />
-      <Toaster />
     </QueryClientProvider>
   );
 }

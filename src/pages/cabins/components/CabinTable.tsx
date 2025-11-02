@@ -17,9 +17,9 @@ export default function CabinTable() {
   if (!data || !data.length) return "no data";
 
   return (
-    <Table className="border border-gray-200 rounded-xl">
+    <Table className="border rounded-xl">
       <TableHeader className="text-center">
-        <TableRow className="uppercase [&>*]:font-semibold [&>*]:text-gray-600">
+        <TableRow className="uppercase [&>*]:font-semibold bg-sidebar">
           <TableHead></TableHead>
           <TableHead>Cabin</TableHead>
           <TableHead>Capacity</TableHead>
