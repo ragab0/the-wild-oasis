@@ -9,7 +9,7 @@ import { ModeToggle } from "./ModeToggle";
 export default function Header() {
   const navigate = useNavigate();
   const { data } = useUser();
-  const { avatar, full_name = "" } = data?.user?.user_metadata || {};
+  const { avatar_url, full_name = "" } = data?.user?.user_metadata || {};
   const { mutate: logout, isPending } = useLogout();
 
   return (
@@ -17,7 +17,7 @@ export default function Header() {
       {/* avatar */}
       <div className="flex items-center gap-2">
         <Avatar className="flex justify-center items-center border uppercase">
-          <AvatarImage src={avatar} alt={`Avatar of ${full_name}`} />
+          <AvatarImage src={avatar_url} alt={`Avatar of ${full_name}`} />
           <AvatarFallback>
             {(full_name as string).split(" ")[0][0]}
           </AvatarFallback>

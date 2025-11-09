@@ -115,3 +115,23 @@ export function useUpdatePassword() {
     },
   });
 }
+
+export function useUpdateUser() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (data: {
+      fullName?: string;
+      email?: string;
+      avatar?: File;
+      hasOldAvatarUrl?: string;
+    }) => authService.updateUser(data),
+    onSuccess: (data) => {
+      queryClient.setQueryData(authKeys.user(), data);
+      toast.success("Profile updated successfully");
+    },
+    onError: () => {
+      toast.error("Failed to update profile");
+    },
+  });
+}

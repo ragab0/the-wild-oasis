@@ -60,6 +60,59 @@ export const authService = {
       throw error;
     }
   },
+
+  async updateUser({
+    fullName,
+    email,
+    avatar,
+    hasOldAvatarUrl,
+  }: {
+    fullName?: string;
+    email?: string;
+    avatar?: File;
+    hasOldAvatarUrl?: string;
+  }) {
+    // Get current user to check for existing avatar
+    const currentAvatarUrl = hasOldAvatarUrl;
+    let avatarPath = currentAvatarUrl; // Keep current avatar by default
+
+    if (avatar) {
+      // Upload new avatar
+      const fileName = `avatar-${Date.now()}-${avatar.name}`.replaceAll(
+        "/",
+        ""
+      );
+      const { error: uploadError } = await supabase.storage
+        .from("avatars")
+        .upload(fileName, avatar);
+
+      if (uploadError) throw uploadError;
+
+      // Set new avatar path
+      avatarPath = `${
+        import.meta.env.VITE_API_URL
+      }/storage/v1/object/public/avatars/${fileName}`;
+
+      // Delete old avatar if exists
+      if (currentAvatarUrl) {
+        const oldFileName = currentAvatarUrl.split("/avatars/").pop();
+        if (oldFileName) {
+          await supabase.storage.from("avatars").remove([oldFileName]);
+        }
+      }
+    }
+
+    const { data, error } = await supabase.auth.updateUser({
+      email,
+      data: {
+        full_name: fullName,
+        avatar_url: avatarPath,
+      },
+    });
+
+    if (error) throw error;
+    return data;
+  },
 };
 
 export default authService;
