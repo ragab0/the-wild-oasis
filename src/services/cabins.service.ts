@@ -8,13 +8,46 @@ import supabase from "./supabase.service";
 const supabaseUrl = import.meta.env.VITE_API_URL;
 
 export const cabinsService = {
-  getAllCabins: async function (): Promise<Cabin[]> {
-    const { data, error } = await supabase.from("cabins").select("*");
+  getAllCabins: async function ({
+    page = 1,
+    pageSize = 10,
+    sortBy = "created_at",
+    sortDirection = "desc",
+    discount = "all"
+  }: {
+    page?: number;
+    pageSize?: number;
+    sortBy?: string;
+    sortDirection?: "asc" | "desc";
+    discount?: string;
+  } = {}): Promise<{ data: Cabin[]; count: number }> {
+    let query = supabase
+      .from("cabins")
+      .select("*", { count: "exact" });
+
+    // Apply discount filter
+    if (discount === "no_discount") {
+      query = query.eq("discount", 0);
+    } else if (discount === "with_discount") {
+      query = query.gt("discount", 0);
+    }
+
+    // Apply sorting
+    query = query.order(sortBy, { ascending: sortDirection === "asc" });
+
+    // Apply pagination
+    const from = (page - 1) * pageSize;
+    const to = from + pageSize - 1;
+    query = query.range(from, to);
+
+    const { data, error, count } = await query;
+    
     if (error) {
       console.error(error);
       throw new Error("Cabins could not be loaded");
     }
-    return data;
+    
+    return { data: data || [], count: count || 0 };
   },
 
   _createEditCabin: async function (

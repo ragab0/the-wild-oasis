@@ -1,6 +1,7 @@
 import type { Cabin } from "./cabin";
 import type { Guest } from "./guest";
 
+export type StatusType = "unconfirmed" | "checked-in" | "checked-out";
 export interface Booking {
   id: number;
   cabin_id: number;
@@ -17,7 +18,7 @@ export interface Booking {
   cabin_price: number;
   extra_price: number;
   total_price: number;
-  status: "unconfirmed" | "checked-in" | "checked-out";
+  status: StatusType;
   observations: string;
 
   guests: Guest;
