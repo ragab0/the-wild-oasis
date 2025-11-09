@@ -8,7 +8,7 @@ import {
   SidebarMenu,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { Calendar, Home, Inbox, Settings } from "lucide-react";
+import { Calendar, Home, Inbox, Settings, User2 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 import Logo from "./Logo";
 import UploadSample from "./UploadSample";
@@ -30,9 +30,9 @@ const items = [
     icon: Calendar,
   },
   {
-    title: "Users",
-    url: "/users",
-    icon: Calendar,
+    title: "Guests",
+    url: "/guests",
+    icon: User2,
   },
   {
     title: "Settings",

@@ -8,7 +8,7 @@ import NotFoundPage from "./pages/notFound/NotFoundPage";
 import LoginPage from "./pages/login/LoginPage";
 import AccountPage from "./pages/account/AccountPage";
 import SettingsPage from "./pages/settings/SettingsPage";
-import UsersPage from "./pages/users/UsersPage";
+import GuestsPage from "./pages/guests/GuestsPage";
 import CabinsPage from "./pages/cabins/CabinsPage";
 import BookingsPage from "./pages/bookings/BookingsPage";
 import SignupPage from "./pages/signup/SignupPage";
@@ -42,7 +42,7 @@ export default function App() {
               <Route path="dashboard" element={<HomePage />} />
               <Route path="bookings" element={<BookingsPage />} />
               <Route path="cabins" element={<CabinsPage />} />
-              <Route path="users" element={<UsersPage />} />
+              <Route path="guests" element={<GuestsPage />} />
               <Route path="settings" element={<SettingsPage />} />
               <Route path="account" element={<AccountPage />} />
             </Route>

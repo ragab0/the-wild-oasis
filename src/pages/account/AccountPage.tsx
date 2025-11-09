@@ -1,13 +1,7 @@
 import PasswordForm from "./components/PasswordForm";
 import PersonalInfoForm from "./components/PersonalInfoForm";
 
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export default function AccountPage() {
   return (
@@ -16,9 +10,6 @@ export default function AccountPage() {
       <Card>
         <CardHeader>
           <CardTitle>Update Profile</CardTitle>
-          <CardDescription>
-            Update your personal information and avatar
-          </CardDescription>
         </CardHeader>
         <CardContent>
           <PersonalInfoForm />
@@ -27,9 +18,6 @@ export default function AccountPage() {
       <Card>
         <CardHeader>
           <CardTitle>Change Password</CardTitle>
-          <CardDescription>
-            Update your password to a new secure one
-          </CardDescription>
         </CardHeader>
         <CardContent>
           <PasswordForm />
