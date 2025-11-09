@@ -1,12 +1,13 @@
 import type { Booking } from "@/types/booking";
 import { TableCell, TableRow } from "@/components/ui/table";
 import { formatCurrency, formatDistanceFromNow } from "@/utils/helpers";
+import { format, isToday } from "date-fns";
+import { useNavigate } from "react-router-dom";
 import {
   useCheckInBooking,
   useCheckOutBooking,
   useDeleteBooking,
 } from "@/hooks/useBookings";
-import { format, isToday } from "date-fns";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,13 +21,7 @@ import {
   SquareArrowUp,
   Trash2,
 } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-
-const statusColors = {
-  unconfirmed: "text-info-foreground bg-info/50",
-  "checked-in": "text-success-foreground bg-success/50",
-  "checked-out": "text-silver-foreground bg-silver/50",
-};
+import { statusColors } from "@/assets/constants";
 
 export default function BookingRow({ booking }: { booking: Booking }) {
   const navigate = useNavigate();
@@ -113,9 +108,11 @@ export default function BookingRow({ booking }: { booking: Booking }) {
                   <SquareArrowUp /> Check out
                 </DropdownMenuItem>
               )}
-              <DropdownMenuItem onSelect={() => deleteBooking(id)}>
-                <Trash2 /> Delete
-              </DropdownMenuItem>
+              {status !== "checked-in" && (
+                <DropdownMenuItem onSelect={() => deleteBooking(id)}>
+                  <Trash2 /> Delete
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </TableCell>

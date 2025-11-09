@@ -29,7 +29,7 @@ export const bookingsService = {
     pageSize = 10,
     status = "all",
     sortBy = "created_at",
-    sortDirection = "desc"
+    sortDirection = "desc",
   }: {
     page?: number;
     pageSize?: number;
@@ -43,10 +43,10 @@ export const bookingsService = {
 
     // status filter
     if (status !== "all") query = query.eq("status", status);
-    
+
     // Apply sorting
     query = query.order(sortBy, { ascending: sortDirection === "asc" });
-    
+
     // pagination
     const from = (page - 1) * pageSize;
     const to = from + pageSize - 1;
@@ -63,7 +63,7 @@ export const bookingsService = {
   getBookingById: async function (id: number): Promise<Booking> {
     const { data, error } = await supabase
       .from("bookings")
-      .select("*")
+      .select("*, guests(*), cabins(name)")
       .eq("id", id)
       .single();
 

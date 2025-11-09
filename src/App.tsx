@@ -2,6 +2,7 @@ import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "./providers/ThemeProvider";
 import AppLayout from "./layouts/AppLayout";
 import HomePage from "./pages/home/HomePage";
 import NotFoundPage from "./pages/notFound/NotFoundPage";
@@ -14,7 +15,7 @@ import BookingsPage from "./pages/bookings/BookingsPage";
 import SignupPage from "./pages/signup/SignupPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PublicedRoute from "./components/PublicedRoute";
-import { ThemeProvider } from "./providers/ThemeProvider";
+import BookingPage from "./pages/booking/BookingPage";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -40,7 +41,10 @@ export default function App() {
             >
               <Route index element={<Navigate to="/dashboard" />} />
               <Route path="dashboard" element={<HomePage />} />
-              <Route path="bookings" element={<BookingsPage />} />
+              <Route path="bookings">
+                <Route index element={<BookingsPage />} />
+                <Route path=":id" element={<BookingPage />} />
+              </Route>
               <Route path="cabins" element={<CabinsPage />} />
               <Route path="guests" element={<GuestsPage />} />
               <Route path="settings" element={<SettingsPage />} />

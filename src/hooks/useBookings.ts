@@ -1,6 +1,6 @@
 import { bookingsService } from "@/services/bookings.service";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { toast } from "sonner"; // or your toast library
 
 /** keys */
@@ -19,17 +19,23 @@ export function useGetAllBookings() {
   const page = Number(searchParams.get("page")) || 1;
   const pageSize = Number(searchParams.get("pageSize")) || 10;
   const sortBy = searchParams.get("sortBy") || "created_at";
-  const sortDirection = (searchParams.get("sortDirection") || "desc") as "asc" | "desc";
+  const sortDirection = (searchParams.get("sortDirection") || "desc") as
+    | "asc"
+    | "desc";
 
   return useQuery({
-    queryKey: [...bookingsKeys.all, { status, page, pageSize, sortBy, sortDirection }],
-    queryFn: () => bookingsService.getAllBookings({ 
-      status, 
-      page, 
-      pageSize,
-      sortBy,
-      sortDirection
-    }),
+    queryKey: [
+      ...bookingsKeys.all,
+      { status, page, pageSize, sortBy, sortDirection },
+    ],
+    queryFn: () =>
+      bookingsService.getAllBookings({
+        status,
+        page,
+        pageSize,
+        sortBy,
+        sortDirection,
+      }),
     staleTime: 5 * 60 * 1000, // 5 minutes
     retry: 1,
   });
@@ -64,7 +70,9 @@ export function useCheckInBooking() {
   return useMutation({
     mutationFn: (id: number) => bookingsService.checkInBooking(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: bookingsKeys.all });
+      queryClient.invalidateQueries({
+        queryKey: bookingsKeys.all,
+      });
       toast.success("Booking successfully checked in");
     },
     onError: (error: Error) => {
@@ -79,7 +87,9 @@ export function useCheckOutBooking() {
   return useMutation({
     mutationFn: (id: number) => bookingsService.checkOutBooking(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: bookingsKeys.all });
+      queryClient.invalidateQueries({
+        queryKey: bookingsKeys.all,
+      });
       toast.success("Booking successfully checked out");
     },
     onError: (error: Error) => {
@@ -88,13 +98,17 @@ export function useCheckOutBooking() {
   });
 }
 
-export function useDeleteBooking() {
+export function useDeleteBooking(goBack?: boolean) {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (id: number) => bookingsService.deleteBooking(id),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: bookingsKeys.all });
+      queryClient.invalidateQueries({
+        queryKey: bookingsKeys.all,
+      });
+      if (goBack) navigate("..");
       toast.success("Booking successfully deleted");
     },
     onError: (error: Error) => {
