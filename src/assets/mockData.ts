@@ -84,6 +84,43 @@ export const cabinsMockData = [
 ];
 
 export const bookingsMockData = [
+  // CABIN 008
+  {
+    created_at: fromToday(0, false),
+    start_date: fromToday(0, false),
+    end_date: fromToday(7, false),
+    cabin_id: 8,
+    guest_id: 1,
+    has_breakfast: true,
+    observations:
+      "Ragab is in free time so I would like to request a good breakfast if possible",
+    is_paid: true,
+    total_guests: 3,
+  },
+  {
+    created_at: fromToday(0, true),
+    start_date: fromToday(0),
+    end_date: fromToday(5),
+    cabin_id: 8,
+    guest_id: 23,
+    has_breakfast: true,
+    observations:
+      "I am celebrating my anniversary, can you arrange for any special amenities or decorations?",
+    is_paid: true,
+    total_guests: 10,
+  },
+  {
+    created_at: fromToday(-10, true),
+    start_date: fromToday(10),
+    end_date: fromToday(13),
+    cabin_id: 8,
+    guest_id: 24,
+    has_breakfast: false,
+    observations: "",
+    is_paid: true,
+    total_guests: 7,
+  },
+
   // CABIN 001
   {
     created_at: fromToday(-20, true),
@@ -329,43 +366,6 @@ export const bookingsMockData = [
     observations: "",
     is_paid: true,
     total_guests: 6,
-  },
-
-  // CABIN 008
-  {
-    created_at: fromToday(-8, true),
-    start_date: fromToday(-5),
-    end_date: fromToday(0),
-    cabin_id: 8,
-    guest_id: 1,
-    has_breakfast: true,
-    observations:
-      "My wife has a gluten allergy so I would like to request a gluten-free breakfast if possible",
-    is_paid: true,
-    total_guests: 9,
-  },
-  {
-    created_at: fromToday(0, true),
-    start_date: fromToday(0),
-    end_date: fromToday(5),
-    cabin_id: 8,
-    guest_id: 23,
-    has_breakfast: true,
-    observations:
-      "I am celebrating my anniversary, can you arrange for any special amenities or decorations?",
-    is_paid: true,
-    total_guests: 10,
-  },
-  {
-    created_at: fromToday(-10, true),
-    start_date: fromToday(10),
-    end_date: fromToday(13),
-    cabin_id: 8,
-    guest_id: 24,
-    has_breakfast: false,
-    observations: "",
-    is_paid: true,
-    total_guests: 7,
   },
 ];
 

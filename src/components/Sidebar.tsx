@@ -43,7 +43,7 @@ const items = [
 
 export default function AppSidebar() {
   return (
-    <Sidebar className="py-4">
+    <Sidebar>
       <SidebarHeader>
         <Logo />
       </SidebarHeader>
